@@ -1,3 +1,6 @@
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.io.*;
 import java.net.Socket;
 import java.nio.file.Files;
@@ -9,6 +12,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class ClientHandler extends Thread {
+    private static final Logger logger = LogManager.getLogger();
     private static String nickname;
     // Список комманд, которые приходят с аргументом в виде имена файла
     // Список нужен для проверки существования файла
@@ -46,10 +50,12 @@ public class ClientHandler extends Thread {
                                     out.writeObject(answer);
                                     // И создадим папку на сервере, если её еще нет
                                     createUserDir(nickname);
+                                    logger.info("Клиент " + nickname + " успешно авторизовался");
                                 }
                             } else {
                                 TextAnswer answer = new TextAnswer("Сначала необходимо авторизоваться!");
                                 out.writeObject(answer);
+                                logger.warn("Ошибка авторизации");
                             }
                         }
 
@@ -61,6 +67,7 @@ public class ClientHandler extends Thread {
                                 FileWrap file = (FileWrap) co;
                                 // Создаем физический файл на диске
                                 creteFile(file);
+                                logger.info("Клиент " + nickname + " передал файл " + file.getFileName());
                             } else {
                                 // Если команда, то проверяем какая именно
                                 Command command = (Command) co;
@@ -82,12 +89,14 @@ public class ClientHandler extends Thread {
                                         delFile(command.getFileName());
                                         TextAnswer text = new TextAnswer("Файл " + command.getFileName() + " удален");
                                         out.writeObject(text);
+                                        logger.info("Клиент " + nickname + " удалил файл " + command.getFileName());
                                         break;
                                     }
                                     case "rename": {
                                         System.out.println("rename " + command.getFileName());
                                         TextAnswer text = new TextAnswer("Файл " + command.getFileName() + " переименован в " + command.getNewFileName());
                                         renameFile(command.getFileName(), command.getNewFileName());
+                                        logger.info("Клиент " + nickname + " переименовал файл " + command.getFileName() + " в " + command.getNewFileName());
                                         break;
                                     }
                                     case "dir": {
@@ -100,6 +109,8 @@ public class ClientHandler extends Thread {
                                         System.out.println("copy file" + command.getFileName());
                                         FileWrap fw = new FileWrap(Paths.get("server_dir/", nickname,command.getFileName()));
                                         out.writeObject(fw);
+                                        logger.info("Клиент " + nickname + " скопировал файл " + command.getFileName() + " с сервера");
+                                        break;
                                     }
                                 }
                             }
