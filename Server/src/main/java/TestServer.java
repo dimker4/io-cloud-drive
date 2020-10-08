@@ -8,6 +8,7 @@ public class TestServer {
     TestServer () {
         try {
             // серверсокет
+            AuthService.connect();
             ServerSocket server = new ServerSocket(SERVER_PORT);
             System.out.println("Server listening ...");
             while (true) {
@@ -15,7 +16,7 @@ public class TestServer {
                 Socket clientSocket = server.accept();
                 System.out.println("Client connected!");
                 // для каждого клиента создаем отдельный обработчик
-                new ClientHandler(this, clientSocket);
+                new ClientHandler(this, clientSocket).start();
             }
         } catch (IOException e) {
             e.printStackTrace();
