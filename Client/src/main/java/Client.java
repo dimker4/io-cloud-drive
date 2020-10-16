@@ -18,8 +18,9 @@ public class Client {
     public final static int SERVER_PORT = 8189;
     public final static String SERVER_ADDR  = "127.0.0.1";
     private static Socket socket;
+    private static boolean running = true;
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         try {
             socket = new Socket(SERVER_ADDR , SERVER_PORT);
             ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
@@ -28,7 +29,7 @@ public class Client {
             Thread t1 = new Thread (new Runnable() { // Отдельный поток для чтения сообщений от сервера
                 @Override
                 public void run() {
-                    while (true) {
+                    while (running) {
                         try {
                             // Получаем объект - Родителький класс для всех сущностей, которые могут придти с сервера
                             CommonObj co = (CommonObj) in.readObject();
@@ -41,7 +42,13 @@ public class Client {
                                 creteFile(fw);
                             }
                         } catch (IOException | ClassNotFoundException e) {
-                            e.printStackTrace();
+                            System.out.println("Соединение закрыто! ");
+                        } finally {
+                            try {
+                                socket.close();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
                         }
                     }
                 }
@@ -129,6 +136,14 @@ public class Client {
                             System.out.println(getFilesList());
                             break;
                         }
+                        case "exit": {
+                            System.out.println("Закрываем соединение");
+                            running = false;
+                            sleep(300);
+                            com = new Command(outputSplit[0], null, null);
+                            out.writeObject(com);
+                            return;
+                        }
                         default: {
                             // Во всех остальных случаях ругаемся
                             System.out.println("Неизвестная команда, попробуй еще!");
@@ -140,11 +155,17 @@ public class Client {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
+                finally {
+                    socket.close();
+                }
             }
         } catch (IOException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
+        }
+        finally {
+            socket.close();
         }
     }
 
