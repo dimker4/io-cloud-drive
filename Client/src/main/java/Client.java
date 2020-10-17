@@ -43,12 +43,6 @@ public class Client {
                             }
                         } catch (IOException | ClassNotFoundException e) {
                             System.out.println("Соединение закрыто! ");
-                        } finally {
-                            try {
-                                socket.close();
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
                         }
                     }
                 }
@@ -154,9 +148,6 @@ public class Client {
                     e.printStackTrace();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
-                }
-                finally {
-                    socket.close();
                 }
             }
         } catch (IOException e) {
