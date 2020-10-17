@@ -112,11 +112,22 @@ public class ClientHandler extends Thread {
                                         logger.info("Клиент " + nickname + " скопировал файл " + command.getFileName() + " с сервера");
                                         break;
                                     }
+                                    case "exit": {
+                                        logger.info("Клиент " + nickname + " отключился");
+                                        return;
+                                    }
                                 }
                             }
                         }
                     } catch (Exception e) {
                         e.printStackTrace();
+                    }
+                    finally {
+                        try {
+                            socket.close();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
             }).start();

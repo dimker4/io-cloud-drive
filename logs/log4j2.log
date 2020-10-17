@@ -1,4 +1,13 @@
-2020-10-08 20:42:12,615 INFO ClientHandler [Thread-1] Клиент johnуспешно авторизовался
-2020-10-08 20:46:50,793 INFO ClientHandler [Thread-1] Клиент john успешно авторизовался
-2020-10-08 20:46:56,198 INFO ClientHandler [Thread-1] Клиент john удалил файл 1.txt
-2020-10-08 20:47:02,417 INFO ClientHandler [Thread-1] Клиент john скопировал файл 5.txt с сервера
+2020-10-16 19:11:49,230 INFO ClientHandler [Thread-1] Клиент john успешно авторизовался
+2020-10-16 19:15:16,023 INFO ClientHandler [Thread-1] Клиент john успешно авторизовался
+2020-10-16 19:17:36,552 INFO ClientHandler [Thread-1] Клиент john успешно авторизовался
+2020-10-16 19:18:26,170 INFO ClientHandler [Thread-3] Клиент john успешно авторизовался
+2020-10-16 19:20:10,941 INFO ClientHandler [Thread-1] Клиент john успешно авторизовался
+2020-10-16 19:21:21,971 INFO ClientHandler [Thread-3] Клиент john успешно авторизовался
+2020-10-16 19:21:24,346 INFO ClientHandler [Thread-3] Клиент john отключился
+2020-10-16 19:23:27,389 INFO ClientHandler [Thread-1] Клиент john успешно авторизовался
+2020-10-16 19:23:29,371 INFO ClientHandler [Thread-1] Клиент john отключился
+2020-10-16 19:24:15,179 INFO ClientHandler [Thread-3] Клиент john успешно авторизовался
+2020-10-16 19:24:17,181 INFO ClientHandler [Thread-3] Клиент john отключился
+2020-10-16 19:25:57,138 INFO ClientHandler [Thread-5] Клиент john успешно авторизовался
+2020-10-16 19:25:59,397 INFO ClientHandler [Thread-5] Клиент john отключился
